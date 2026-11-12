@@ -225,7 +225,7 @@ body.inicio .cab{background:rgba(244,240,232,.6)}
 .js-mov [data-rev="texto"]{opacity:1;transform:none}
 .js-mov [data-rev="texto"] .pal>span{transform:translateY(108%);transition:transform 1.1s var(--suavizado);transition-delay:calc(var(--d)*70ms)}
 .js-mov [data-rev="texto"].visto .pal>span{transform:none}
-.tinte{font-style:italic;background:linear-gradient(90deg,var(--marron),var(--rojo) 35%,var(--naranja) 60%,var(--rojo) 85%,var(--marron)) 0 50%/200% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:brillo 7s linear infinite;padding-right:.08em}
+.tinte{font-style:italic;background:linear-gradient(90deg,var(--marron),var(--rojo) 35%,#d95200 60%,var(--rojo) 85%,var(--marron)) 0 50%/200% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:brillo 7s linear infinite;padding-right:.08em}
 
 /* Portada con manchas de color en movimiento */
 .heroe{position:relative;overflow:hidden}
@@ -382,6 +382,9 @@ body.inicio .pie{border-top:0;padding-bottom:104px}
 .valores li.foco:hover::before{opacity:1}
 .valores li>*{position:relative;z-index:1}
 .vuelo{position:fixed;z-index:9996;border-radius:50%;pointer-events:none;object-fit:cover;box-shadow:0 10px 30px rgba(23,20,18,.25)}
+
+/* Contraste AA: sobre paneles de color el texto secundario va mas oscuro (medido: >= 4.5:1 en todos los tonos) */
+[class*="c-"]{--suave:#3d3631}
 </style>
 <script>(function(){var q=false;try{q=localStorage.getItem('bv-quieto')==='1'}catch(e){}document.documentElement.className=(!q&&'IntersectionObserver'in window)?'js-mov':'quieto'})()</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Restaurant","name":"Bowl Vibes","slogan":"Sabor que nutre, energía que vibra","description":"Bowl Vibes: bowls saludables y altos en proteína a domicilio en Medellín. 6 bowls de autor desde $25.000 o arma el tuyo. Pide por WhatsApp.","servesCuisine":["Bowls","Comida saludable"],"address":{"@type":"PostalAddress","addressLocality":"Medellín","addressRegion":"Antioquia","addressCountry":"CO"},"areaServed":{"@type":"City","name":"Medellín"},"telephone":"+573246281665","sameAs":["https://www.instagram.com/bowlvibesmed/"],"hasMenu":"https://julianabril.github.io/bowlvibes/menu.html","url":"https://julianabril.github.io/bowlvibes/","openingHours":"Mo-Su 11:00-21:00","priceRange":"$25.000 – $35.000"}</script>
