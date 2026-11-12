@@ -14,179 +14,242 @@
 <meta property="og:image" content="https://julianabril.github.io/bowlvibes/img/bowls/fresh-800.webp">
 <meta property="og:locale" content="es_CO">
 <link rel="icon" href="img/logo-160.webp" type="image/webp">
-<style>:root{
-  --crema:#e9e2d5;--blanco:#fff;--tinta:#000;--marron:#7d2d00;--rojo:#ea1e28;--naranja:#fa6612;
-  --amarillo:#ffde59;--rosa:#f884c6;--lima:#a7dd5e;--lila:#adbbff;--wa:#0b5d2e;
-  --titular:"Arial Black","Segoe UI Black","Helvetica Neue",Impact,system-ui,sans-serif;
+<style>/* Bowl Vibes — base visual (version 4, sobria). Compartida por el inicio y el menu. */
+:root{
+  --fondo:#f4f0e8;--crema:#e9e2d5;--blanco:#fff;--tinta:#171412;--suave:#5b524a;--linea:rgba(23,20,18,.16);
+  --marron:#7d2d00;--rojo:#ea1e28;--naranja:#fa6612;--amarillo:#ffde59;--rosa:#f884c6;--lima:#a7dd5e;--lila:#adbbff;--wa:#0b5d2e;
+  --titular:"Iowan Old Style","Palatino Linotype",Palatino,"Book Antiqua",Georgia,serif;
   --texto:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
-  --r:22px;
+  --r:18px;--suavizado:cubic-bezier(.22,1,.36,1);--lado:22px;
 }
 *{box-sizing:border-box}
-html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;scroll-padding-top:76px}
-@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important;animation:none!important}}
-body{margin:0;background:var(--crema);color:var(--tinta);font:17px/1.5 var(--texto);padding-bottom:96px}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;scroll-padding-top:84px}
+html.quieto{scroll-behavior:auto}.quieto *,.quieto *::before,.quieto *::after{transition:none!important;animation:none!important}
+@view-transition{navigation:auto}
+body{margin:0;background:var(--fondo);color:var(--tinta);font:17px/1.6 var(--texto);padding-bottom:96px;-webkit-font-smoothing:antialiased}
 img{max-width:100%;height:auto;display:block}
 h1,h2,h3,p,ul{margin:0}
 ul{padding:0;list-style:none}
 a{color:inherit}
 button,input{font:inherit;color:inherit}
-:focus-visible{outline:3px solid var(--tinta);outline-offset:3px;border-radius:6px}
+:focus-visible{outline:2px solid var(--tinta);outline-offset:3px;border-radius:6px}
 .saltar{position:absolute;left:-999px;top:8px;background:var(--tinta);color:#fff;padding:12px 16px;z-index:50;border-radius:8px}
 .saltar:focus{left:8px}
+.solo-lector{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 
-.cab{position:sticky;top:0;z-index:20;background:var(--crema);border-bottom:2px solid var(--tinta);display:flex;align-items:center;justify-content:space-between;gap:8px;padding:8px 14px;flex-wrap:wrap}
+/* Colores de cada bowl: se usan como tinte suave, nunca como bloque saturado */
+.c-lila{--tono:var(--lila)}.c-naranja{--tono:var(--naranja)}.c-amarillo{--tono:var(--amarillo)}
+.c-crema{--tono:#fff}.c-lima{--tono:var(--lima)}.c-rosa{--tono:var(--rosa)}
+
+/* Cabecera */
+.cab{position:sticky;top:0;z-index:20;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:8px var(--lado);background:rgba(244,240,232,.78);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border-bottom:1px solid var(--linea);transition:transform .5s var(--suavizado)}
 .marca{display:flex;align-items:center;gap:10px;text-decoration:none;min-height:48px}
-.marca img{border-radius:50%;background:#fff}
-.marca b{display:block;font:900 1.05rem/1 var(--titular);letter-spacing:.04em}
-.marca small{display:block;font-size:.78rem;letter-spacing:.08em}
-.cab nav{display:flex;gap:6px;overflow-x:auto;max-width:100%}
-.cab nav a{white-space:nowrap;text-decoration:none;font-weight:700;font-size:.92rem;padding:0 14px;min-height:44px;display:inline-flex;align-items:center;border:2px solid var(--tinta);border-radius:999px;background:#fff}
-.cab nav a:hover{background:var(--amarillo)}
+.marca img{border-radius:50%;background:#fff;width:40px;height:40px}
+.marca b{display:block;font:400 1.25rem/1 var(--titular);letter-spacing:-.01em}
+.marca small{display:block;font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--suave);margin-top:3px}
+.cab nav{display:flex;gap:2px;overflow-x:auto;max-width:100%;scrollbar-width:none}
+.cab nav a{position:relative;white-space:nowrap;text-decoration:none;font-weight:500;font-size:.95rem;padding:0 12px;min-height:44px;display:inline-flex;align-items:center}
+.cab nav a::after{content:"";position:absolute;left:12px;right:12px;bottom:10px;height:1px;background:currentColor;transform:scaleX(0);transform-origin:0 50%;transition:transform .45s var(--suavizado)}
+.cab nav a:hover::after{transform:scaleX(1)}
 
-.hero{padding:36px 18px 28px;max-width:900px;margin:0 auto;text-align:center}
-.hero-sobre{font-weight:700;letter-spacing:.14em;text-transform:uppercase;font-size:.8rem;color:var(--marron)}
-.hero h1{font:900 clamp(2rem,9vw,4rem)/1.02 var(--titular);text-transform:uppercase;margin:10px 0 14px;letter-spacing:-.01em;text-wrap:balance}
-.hero-texto{font-size:1.05rem;max-width:34ch;margin:0 auto}
+/* Titulares y textos */
+.hero{padding:56px var(--lado) 40px;max-width:820px;margin:0 auto;text-align:center}
+.hero-sobre{font-weight:500;letter-spacing:.16em;text-transform:uppercase;font-size:.74rem;color:var(--suave)}
+.hero h1{font:400 clamp(2.2rem,8vw,3.8rem)/1.05 var(--titular);margin:14px 0 16px;letter-spacing:-.02em;text-wrap:balance}
+.hero-texto{color:var(--suave);max-width:36ch;margin:0 auto}
+.titulo{font:400 clamp(2rem,6.4vw,3.2rem)/1.06 var(--titular);letter-spacing:-.02em;text-wrap:balance}
+#bowls>.titulo,.bebidas>.titulo,.diferentes>.titulo{padding:8px var(--lado) 22px;max-width:1120px;margin:0 auto}
 
-.titulo{font:900 clamp(1.9rem,8vw,3.2rem)/1 var(--titular);text-transform:uppercase;letter-spacing:-.01em}
-#bowls>.titulo,.bebidas>.titulo,.diferentes>.titulo{padding:8px 18px 16px;max-width:1100px;margin:0 auto}
-
-.bowl{display:grid;gap:18px;padding:28px 18px 32px;border-top:2px solid var(--tinta)}
-.bowl:last-of-type{border-bottom:2px solid var(--tinta)}
-.c-lila{background:var(--lila)}.c-naranja{background:var(--naranja)}.c-amarillo{background:var(--amarillo)}
-.c-crema{background:#fff}.c-lima{background:var(--lima)}.c-rosa{background:var(--rosa)}
-.bowl-foto{position:relative;width:min(62vw,340px);margin:0 auto}
-.plato{border-radius:50%;aspect-ratio:1;object-fit:cover;width:100%;filter:drop-shadow(0 10px 0 rgba(0,0,0,.18))}
-.sello{position:absolute;right:-18px;bottom:2px;background:var(--tinta);color:#fff;font:900 1.15rem/1 var(--titular);padding:14px 16px;border-radius:999px;transform:rotate(-6deg)}
+/* Bowls del menu */
+.bowl{display:grid;gap:22px;padding:44px var(--lado) 48px;background:color-mix(in srgb,var(--tono,#fff) 22%,var(--fondo))}
+.bowl-foto{position:relative;width:min(64vw,340px);margin:0 auto}
+.bowl-foto::before{content:"";position:absolute;inset:8% 4% -6%;border-radius:50%;background:radial-gradient(closest-side,rgba(23,20,18,.3),rgba(23,20,18,0));transform:translateY(7%)}
+.plato{position:relative;border-radius:50%;aspect-ratio:1;object-fit:cover;width:100%;will-change:transform}
+.sello{position:absolute;right:-6px;bottom:6px;background:#fff;color:var(--tinta);font:600 1rem/1 var(--texto);padding:10px 14px;border-radius:999px;box-shadow:0 6px 20px rgba(23,20,18,.12)}
 .bowl-texto{max-width:520px;margin:0 auto;width:100%}
-.bowl h3{font:900 clamp(2.1rem,10vw,3.4rem)/.95 var(--titular);text-transform:uppercase;letter-spacing:-.015em;margin-bottom:10px}
-.etiquetas{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}
-.etiquetas span{font-size:.75rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;border:2px solid var(--tinta);border-radius:999px;padding:3px 10px}
-.pildora{display:inline-block;background:#fff;border-radius:16px;padding:6px 14px;font-weight:800;font-size:1.05rem;margin-bottom:10px}
-.c-crema .pildora{background:var(--amarillo)}
-.desc{max-width:46ch}
-.nota-foto{font-size:.82rem;margin-top:6px}
+.bowl h3{font:400 clamp(2.1rem,8vw,3.2rem)/1 var(--titular);letter-spacing:-.02em;margin-bottom:10px}
+.etiquetas{display:flex;flex-wrap:wrap;gap:4px 14px;margin-bottom:10px}
+.etiquetas span{font-size:.72rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--suave)}
+.pildora{display:inline-block;background:rgba(255,255,255,.7);border:1px solid var(--linea);border-radius:999px;padding:5px 13px;font-weight:600;font-size:.95rem;margin-bottom:12px}
+.desc{max-width:46ch;color:var(--suave)}
+.nota-foto{font-size:.82rem;margin-top:6px;color:var(--suave)}
 
-.contador{display:flex;align-items:center;gap:10px;margin-top:16px}
-.contador button{min-width:48px;min-height:48px;border-radius:999px;border:2px solid var(--tinta);background:var(--tinta);color:#fff;font-weight:800;cursor:pointer;padding:0 20px;font-size:1rem}
+.contador{display:flex;align-items:center;gap:12px;margin-top:20px}
+.contador button{min-width:48px;min-height:48px;border-radius:999px;border:1px solid var(--tinta);background:var(--tinta);color:#fff;font-weight:600;cursor:pointer;padding:0 24px;font-size:1rem;transition:background-color .3s ease,color .3s ease,transform .2s ease}
 .contador button:hover{background:var(--marron);border-color:var(--marron)}
-.contador .menos{background:#fff;color:var(--tinta);padding:0;font-size:1.4rem}
-.contador .menos:hover{background:var(--amarillo);border-color:var(--tinta)}
-.contador .cant{min-width:1.5ch;text-align:center;font:900 1.3rem var(--titular)}
-.contador .mas-ico{display:none;font-size:1.4rem}
+.contador button:active{transform:scale(.95)}
+.contador .menos{background:transparent;color:var(--tinta);padding:0;font-size:1.3rem}
+.contador .menos:hover{background:var(--tinta);color:#fff;border-color:var(--tinta)}
+.contador .cant{min-width:1.5ch;text-align:center;font:400 1.5rem var(--titular)}
+.contador .mas-ico{display:none;font-size:1.3rem}
 .contador.activo .mas{padding:0}
 .contador.activo .mas-txt{display:none}.contador.activo .mas-ico{display:inline}
 
-.arma{background:var(--lila);padding:32px 18px;border-bottom:2px solid var(--tinta)}
-.arma-cab{display:grid;gap:16px;max-width:900px;margin:0 auto 20px;align-items:center}
-.arma-cab .plato{width:min(52vw,260px);margin:0 auto}
-.arma-cab .titulo{margin-bottom:10px}
+/* Arma tu bowl */
+.arma{padding:56px var(--lado);background:var(--crema)}
+.arma-cab{display:grid;gap:18px;max-width:900px;margin:0 auto 26px;align-items:center}
+.arma-cab .plato{width:min(52vw,260px);margin:0 auto;filter:drop-shadow(0 14px 18px rgba(23,20,18,.18))}
+.arma-cab .titulo{margin-bottom:12px}
 #formArma{max-width:900px;margin:0 auto}
-.grupo{border:2px solid var(--tinta);border-radius:var(--r);background:var(--crema);padding:14px;margin:0 0 14px;min-width:0}
-.grupo legend{font:900 1.25rem/1 var(--titular);text-transform:uppercase;padding:0 8px}
-.elige{font:700 .8rem var(--texto);text-transform:none;letter-spacing:0;background:var(--tinta);color:#fff;border-radius:999px;padding:3px 10px;margin-left:6px;vertical-align:middle;white-space:nowrap}
-.grupo-nota{font-size:.88rem;margin:4px 0 8px}
-.opciones{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px;margin-top:8px}
-.opcion{position:relative;display:flex;align-items:center;gap:10px;background:#fff;border:2px solid var(--tinta);border-radius:16px;padding:6px 10px 6px 6px;min-height:68px;cursor:pointer}
+.grupo{border:1px solid var(--linea);border-radius:var(--r);background:rgba(255,255,255,.55);padding:16px;margin:0 0 14px;min-width:0}
+.grupo legend{font:400 1.45rem/1 var(--titular);padding:0 8px}
+.elige{font:500 .78rem var(--texto);color:var(--suave);margin-left:6px;vertical-align:middle;white-space:nowrap}
+.grupo-nota{font-size:.88rem;margin:4px 0 8px;color:var(--suave)}
+.opciones{display:grid;grid-template-columns:repeat(auto-fill,minmax(132px,1fr));gap:8px;margin-top:8px}
+.opcion{position:relative;display:flex;align-items:center;gap:10px;background:#fff;border:1px solid var(--linea);border-radius:14px;padding:6px 10px 6px 6px;min-height:68px;cursor:pointer;transition:background-color .25s ease,color .25s ease,border-color .25s ease}
+.opcion:hover{border-color:var(--tinta)}
 .opcion input{position:absolute;opacity:0;inset:0;width:100%;height:100%;margin:0;cursor:pointer}
-.opcion img{border-radius:12px;flex:none;width:56px;height:56px;object-fit:cover}
-.op-nombre{font-weight:700;font-size:.93rem;line-height:1.2}
-.op-nombre b{display:block;font-weight:800;font-size:.82rem;color:var(--marron)}
-.opcion:has(input:checked){background:var(--tinta);color:#fff}
+.opcion img{border-radius:10px;flex:none;width:56px;height:56px;object-fit:cover}
+.op-nombre{font-weight:500;font-size:.93rem;line-height:1.25}
+.op-nombre b{display:block;font-weight:600;font-size:.8rem;color:var(--marron)}
+.opcion:has(input:checked){background:var(--tinta);border-color:var(--tinta);color:#fff}
 .opcion:has(input:checked) .op-nombre b{color:var(--amarillo)}
-.opcion:has(input:checked)::after{content:"✓";font-weight:900;margin-left:auto;padding-right:2px}
-.opcion:has(input:focus-visible){outline:3px solid var(--tinta);outline-offset:3px}
-.opcion:has(input:disabled){opacity:.45;cursor:not-allowed}
-.arma-pie{position:sticky;bottom:88px;background:#fff;border:2px solid var(--tinta);border-radius:var(--r);padding:12px 14px;display:grid;gap:8px}
-.arma-total{font-size:1.05rem}.arma-total b{font:900 1.3rem var(--titular)}
+.opcion:has(input:checked)::after{content:"✓";font-weight:700;margin-left:auto;padding-right:2px}
+.opcion:has(input:focus-visible){outline:2px solid var(--tinta);outline-offset:3px}
+.opcion:has(input:disabled){opacity:.4;cursor:not-allowed}
+.arma-pie{position:sticky;bottom:88px;background:#fff;border:1px solid var(--linea);border-radius:var(--r);box-shadow:0 10px 30px rgba(23,20,18,.12);display:grid;grid-template-columns:1fr auto;align-items:center;gap:6px 12px;padding:10px 12px}
+.arma-total{font-size:.9rem;line-height:1.2;color:var(--suave)}
+.arma-total b{display:block;font:400 1.5rem var(--titular);color:var(--tinta)}
 .arma-aviso:empty{display:none}
-.arma-aviso{font-weight:700;color:var(--marron)}
+.arma-aviso{grid-column:1/-1;grid-row:1;font-size:.92rem;font-weight:600;color:var(--marron)}
+.arma-pie .btn{min-height:48px;padding:0 18px;font-size:.95rem}
 
-.btn{display:inline-flex;align-items:center;justify-content:center;min-height:52px;padding:0 22px;border-radius:999px;border:2px solid var(--tinta);background:#fff;font-weight:800;cursor:pointer;text-decoration:none;font-size:1rem}
-.btn:hover{background:var(--amarillo)}
+/* Botones y enlaces */
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:52px;padding:0 26px;border-radius:999px;border:1px solid var(--tinta);background:transparent;font-weight:600;cursor:pointer;text-decoration:none;font-size:1rem;transition:background-color .35s ease,color .35s ease,border-color .35s ease,transform .2s ease}
+.btn:hover{background:var(--tinta);color:#fff}
+.btn:active{transform:scale(.97)}
 .btn-oscuro{background:var(--tinta);color:#fff}
 .btn-oscuro:hover{background:var(--marron);border-color:var(--marron)}
 .btn-wa{background:var(--wa);border-color:var(--wa);color:#fff}
 .btn-wa:hover{background:#073d1e;border-color:#073d1e}
+.enlace{position:relative;display:inline-flex;align-items:center;gap:.4em;min-height:44px;font-weight:600;text-decoration:none}
+.enlace::before{content:"";position:absolute;left:0;right:0;bottom:9px;height:1px;background:currentColor;transform-origin:100% 50%;transition:transform .5s var(--suavizado)}
+.enlace:hover::before{transform:scaleX(0)}
+.enlace::after{content:"→";transition:transform .4s var(--suavizado)}
+.enlace:hover::after{transform:translateX(5px)}
 
-.bebidas{background:var(--rosa);padding:32px 0;border-bottom:2px solid var(--tinta)}
-.lista-beb{max-width:640px;margin:0 auto;padding:0 18px}
-.lista-beb li{display:grid;grid-template-columns:1fr auto;gap:2px 12px;align-items:center;padding:12px 0;border-bottom:2px dashed var(--tinta)}
-.lista-beb li:last-child{border-bottom:0}
-.beb-nombre{font-weight:800;font-size:1.1rem}
-.beb-precio{grid-column:1;font-weight:700}
+/* Bebidas */
+.bebidas{padding:56px 0}
+.lista-beb{max-width:640px;margin:0 auto;padding:0 var(--lado)}
+.lista-beb li{display:grid;grid-template-columns:1fr auto;gap:2px 12px;align-items:center;padding:14px 0;border-bottom:1px solid var(--linea)}
+.lista-beb li:first-child{border-top:1px solid var(--linea)}
+.beb-nombre{font:400 1.25rem/1.2 var(--titular)}
+.beb-precio{grid-column:1;color:var(--suave)}
 .lista-beb .contador{grid-column:2;grid-row:1/3;margin:0}
 
-.diferentes{padding:36px 0 12px}
-.diferentes ul{max-width:1100px;margin:0 auto;padding:0 18px;display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(230px,1fr))}
-.diferentes li{background:#fff;border:2px solid var(--tinta);border-radius:var(--r);padding:16px}
-.diferentes li:nth-child(1){background:var(--lima)}.diferentes li:nth-child(3){background:var(--amarillo)}
-.diferentes h3{font:900 1.05rem/1.15 var(--titular);text-transform:uppercase;margin-bottom:6px}
+/* Lo que nos hace diferentes */
+.diferentes{padding:56px 0 20px}
+.diferentes ul{max-width:1120px;margin:0 auto;padding:0 var(--lado);display:grid;gap:0 40px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+.diferentes li{border-top:1px solid var(--linea);padding:20px 0 28px}
+.diferentes h3{font:400 1.4rem/1.15 var(--titular);margin-bottom:8px}
+.diferentes li p{color:var(--suave)}
 
-.pie{text-align:center;padding:36px 18px 24px;display:grid;gap:8px;justify-items:center}
-.pie img{border-radius:50%;background:#fff}
-.pie a{font-weight:800;display:inline-flex;min-height:44px;align-items:center}
-.pie-legal{font-size:.85rem}
+/* Pie */
+.pie{text-align:center;padding:56px var(--lado) 28px;display:grid;gap:6px;justify-items:center;border-top:1px solid var(--linea)}
+.pie img{border-radius:50%;background:#fff;margin-bottom:8px}
+.pie a{font-weight:600;display:inline-flex;min-height:44px;align-items:center}
+.pie-legal{font-size:.82rem;color:var(--suave);margin-top:10px}
 
-.barra-pedido{position:fixed;left:0;right:0;bottom:0;z-index:30;padding:12px 14px calc(12px + env(safe-area-inset-bottom));background:var(--crema);border-top:2px solid var(--tinta)}
+/* Pedido */
+.barra-pedido{position:fixed;left:0;right:0;bottom:0;z-index:30;padding:12px 14px calc(12px + env(safe-area-inset-bottom));background:rgba(244,240,232,.86);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border-top:1px solid var(--linea)}
 .barra-pedido[hidden]{display:none}
-.barra-pedido .btn{width:100%;max-width:560px;margin:0 auto;display:flex;min-height:56px;font-size:1.05rem}
-
-dialog{border:2px solid var(--tinta);border-radius:var(--r);padding:18px;width:min(560px,calc(100vw - 20px));max-height:calc(100dvh - 20px);background:var(--crema);color:var(--tinta)}
-dialog::backdrop{background:rgba(0,0,0,.6)}
+.barra-pedido .btn{width:100%;max-width:560px;margin:0 auto;display:flex;min-height:56px;font-size:1.02rem}
+dialog{border:0;border-radius:22px;padding:22px;width:min(560px,calc(100vw - 20px));max-height:calc(100dvh - 20px);background:var(--fondo);color:var(--tinta);box-shadow:0 30px 80px rgba(23,20,18,.35)}
+dialog::backdrop{background:rgba(23,20,18,.55)}
 .ped-cab{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:12px}
-.ped-cab h2{font:900 1.6rem/1 var(--titular);text-transform:uppercase}
-.ped-cab .btn{min-height:44px;padding:0 14px;font-size:.9rem}
-.ped-lista li{display:grid;grid-template-columns:1fr auto;gap:4px 10px;padding:10px 0;border-bottom:2px dashed var(--tinta)}
-.ped-lista .it-nombre{font-weight:800}
-.ped-lista .it-det{grid-column:1/-1;font-size:.88rem}
-.ped-lista .it-precio{font-weight:800;white-space:nowrap}
-.ped-lista .quitar{grid-column:1/-1;justify-self:start;min-height:44px;background:none;border:0;text-decoration:underline;font-weight:700;cursor:pointer;padding:0}
-.ped-total{display:flex;justify-content:space-between;font-size:1.15rem;margin:14px 0 4px}
-.ped-total b{font:900 1.4rem var(--titular)}
-.ped-nota{font-size:.9rem;margin-bottom:14px}
+.ped-cab h2{font:400 1.9rem/1 var(--titular)}
+.ped-cab .btn{min-height:44px;padding:0 16px;font-size:.9rem}
+.ped-lista li{display:grid;grid-template-columns:1fr auto;gap:4px 10px;padding:12px 0;border-bottom:1px solid var(--linea)}
+.ped-lista .it-nombre{font-weight:600}
+.ped-lista .it-det{grid-column:1/-1;font-size:.88rem;color:var(--suave)}
+.ped-lista .it-precio{font-weight:600;white-space:nowrap}
+.ped-lista .quitar{grid-column:1/-1;justify-self:start;min-height:44px;background:none;border:0;text-decoration:underline;font-weight:500;cursor:pointer;padding:0;color:var(--suave)}
+.ped-total{display:flex;justify-content:space-between;align-items:baseline;font-size:1.05rem;margin:16px 0 4px}
+.ped-total b{font:400 1.7rem var(--titular)}
+.ped-nota{font-size:.9rem;margin-bottom:16px;color:var(--suave)}
 .ped-enviar{width:100%;min-height:56px}
 
+/* Movimiento: pocas cosas, lentas y suaves */
+.progreso{position:fixed;left:0;right:0;top:0;height:2px;background:var(--marron);transform:scaleX(0);transform-origin:0 50%;z-index:40;pointer-events:none}
+.js-mov [data-rev]{opacity:0;transform:translateY(26px);transition:opacity 1s var(--suavizado),transform 1.1s var(--suavizado);transition-delay:calc(var(--i,0)*90ms)}
+.js-mov [data-rev="zoom"]{transform:scale(.92)}
+.js-mov [data-rev].visto{opacity:1;transform:none}
+@keyframes salto{0%,100%{transform:scale(1)}40%{transform:scale(1.04)}}
+.js-mov .salto.salto{animation:salto .5s var(--suavizado)}
+
 @media (min-width:760px){
-  .cab{padding:10px 28px}
-  .bowl{grid-template-columns:340px 1fr;gap:48px;align-items:center;padding:44px max(28px,calc(50vw - 500px))}
+  :root{--lado:40px}
+  .bowl{grid-template-columns:340px 1fr;gap:64px;align-items:center;padding:64px max(40px,calc(50vw - 500px))}
   .bowl:nth-of-type(even) .bowl-foto{order:2}
   .bowl-foto{margin:0}.bowl-texto{margin:0}
-  .arma-cab{grid-template-columns:260px 1fr;gap:36px}
+  .arma-cab{grid-template-columns:260px 1fr;gap:40px}
   .opciones{grid-template-columns:repeat(auto-fill,minmax(180px,1fr))}
 }
-
-/* Ajustes para pantallas angostas */
-.opciones{grid-template-columns:repeat(auto-fill,minmax(132px,1fr))}
-.arma-pie{grid-template-columns:1fr auto;align-items:center;gap:6px 12px;padding:10px 12px}
-.arma-pie .arma-aviso{grid-column:1/-1;grid-row:1;font-size:.92rem}
-.arma-pie .arma-total{font-size:.9rem;line-height:1.2}
-.arma-pie .arma-total b{display:block}
-.arma-pie .btn{min-height:48px;padding:0 16px;font-size:.95rem}
 @media (max-width:519px){
-  .cab{flex-wrap:nowrap;padding:6px 10px}
+  .cab{padding:6px 12px}
   .marca span{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
-  .cab nav a{padding:0 12px;font-size:.88rem}
-  html{scroll-padding-top:64px}
+  .cab nav a{padding:0 10px;font-size:.92rem}
+  .cab nav a::after{left:10px;right:10px}
+  html{scroll-padding-top:68px}
 }
 
-/* ---------- Movimiento (solo si la persona no pidio reducirlo) ---------- */
-@media (prefers-reduced-motion:no-preference){@view-transition{navigation:auto}}
-.progreso{position:fixed;left:0;right:0;top:0;height:4px;background:var(--rojo);transform:scaleX(0);transform-origin:0 50%;z-index:40;pointer-events:none}
-.js-mov [data-rev]{opacity:0;transform:translateY(34px);transition:opacity .7s ease,transform .85s cubic-bezier(.2,.8,.2,1);transition-delay:calc(var(--i,0)*90ms)}
-.js-mov [data-rev="zoom"]{transform:scale(.7) rotate(-18deg)}
-.js-mov [data-rev].visto{opacity:1;transform:none}
-.bowl-foto .plato{filter:none;position:relative;will-change:transform}
-.bowl-foto::before{content:"";position:absolute;inset:0;border-radius:50%;background:rgba(0,0,0,.18);transform:translateY(10px)}
-@keyframes salto{0%{transform:scale(1)}35%{transform:scale(1.1) rotate(4deg)}70%{transform:scale(.97)}100%{transform:scale(1)}}
-.js-mov .salto.salto{animation:salto .5s ease}
-.contador button{transition:transform .15s ease,background-color .15s ease}
-.contador button:active{transform:scale(.92)}
-.opcion{transition:transform .15s ease,background-color .15s ease}
-.opcion:has(input:checked){transform:scale(.97)}
-.barra-pedido{transition:transform .3s ease}
+/* Velo de puntos sobre las fotos de los platos */
+.velo{position:absolute;inset:0;width:100%;height:100%;border-radius:50%;image-rendering:pixelated;pointer-events:none}
+.js-mov img[data-velo]{opacity:0}
+.js-mov img[data-velo].velo-listo{opacity:1}
+[class*="c-"]{--velo-papel:var(--tono)}
+.bowl{background:color-mix(in srgb,var(--tono,#fff) 36%,var(--fondo))}
+/* Efectos adaptados de reactbits.dev (Soft Aurora, Click Spark, Star Border, Glare Hover) y csscursors.colorion.co (Jellyroll, Tagalong). */
+
+/* Boton para pausar / activar animaciones */
+.pausa-mov{min-height:44px;padding:0 12px;border:0;background:none;color:var(--suave);font:inherit;font-size:.86rem;text-decoration:underline;text-underline-offset:4px;cursor:pointer}
+.pausa-mov:hover{color:var(--tinta)}
+
+/* Soft Aurora */
+.aurora-gl{position:absolute;inset:0;width:100%;height:100%;display:block}
+.aurora.con-gl i:not(.luz){opacity:.28}
+.cierre .aurora.con-gl i{opacity:.16}
+
+/* Click Spark */
+.chispas{position:fixed;inset:0;width:100%;height:100%;z-index:9997;pointer-events:none}
+
+/* Star Border: una luz recorre el borde del boton principal */
+@property --giro-luz{syntax:'<angle>';inherits:false;initial-value:0deg}
+@keyframes giro-luz{to{--giro-luz:360deg}}
+.js-mov .acciones .btn-oscuro,.js-mov .cierre .btn,.js-mov .arma-pie-l .btn{position:relative;isolation:isolate}
+.js-mov .acciones .btn-oscuro::before,.js-mov .cierre .btn::before,.js-mov .arma-pie-l .btn::before{content:"";position:absolute;inset:-4px;z-index:-1;padding:2px;border-radius:inherit;pointer-events:none;
+  background:conic-gradient(from var(--giro-luz),transparent 0 55%,var(--amarillo) 72%,var(--naranja) 86%,var(--rosa) 94%,transparent 100%);
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);mask-composite:exclude;
+  animation:giro-luz 3.4s linear infinite}
+
+/* Glare Hover: un brillo cruza el panel al pasar el cursor */
+.js-mov .fila,.js-mov .valores li,.js-mov .bowl-foto{position:relative}
+.js-mov .fila,.js-mov .valores li{overflow:hidden}
+.js-mov .fila::after,.js-mov .valores li::after{content:"";position:absolute;inset:0;pointer-events:none;border-radius:inherit;
+  background:linear-gradient(115deg,transparent 42%,rgba(255,255,255,.6) 50%,transparent 58%) no-repeat;background-size:260% 100%;background-position:130% 0;transition:background-position 1s var(--suavizado)}
+.js-mov .fila:hover::after,.js-mov .valores li:hover::after{background-position:-30% 0}
+
+/* Cursor */
+.cur-bv{position:fixed;left:0;top:0;z-index:9998;width:28px;height:28px;margin:-14px 0 0 -14px;border-radius:999px;background:var(--naranja);mix-blend-mode:multiply;opacity:0;pointer-events:none;
+  transform:translate(var(--x,0px),var(--y,0px)) rotate(var(--angle,0rad)) scale(calc(1 + var(--speed,0) * .7),calc(1 - var(--speed,0) * .4));
+  transition:transform .14s,opacity .3s,background-color .3s}
+.cur-bv.activo{opacity:.6}
+.cur-bv.sobre{background:var(--rosa);opacity:.75}
+.cur-bv span{display:none}
+.cur-bv.ver{width:auto;height:auto;margin:0;padding:7px 13px;background:var(--tinta);color:#fff;mix-blend-mode:normal;opacity:1;font-size:.72rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;white-space:nowrap;
+  transform:translate(var(--x,0px),var(--y,0px)) translate(16px,16px);transition:transform .22s var(--suavizado),opacity .3s}
+.cur-bv.ver span{display:inline}
+
+/* Segunda tanda: inclinacion 3D, foco de luz y vuelo al pedido */
+.js-mov .fila-foto,.js-mov .portada-foto,.js-mov .arma-foto{will-change:transform}
+.valores li.foco::before{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;opacity:0;transition:opacity .5s ease;
+  background:radial-gradient(260px circle at var(--mx,50%) var(--my,50%),rgba(255,255,255,.75),transparent 70%)}
+.pedir li.foco{background:radial-gradient(240px circle at var(--mx,-300px) var(--my,-300px),color-mix(in srgb,var(--amarillo) 55%,transparent),transparent 70%) no-repeat}
+.valores li.foco:hover::before{opacity:1}
+.valores li>*{position:relative;z-index:1}
+.vuelo{position:fixed;z-index:9996;border-radius:50%;pointer-events:none;object-fit:cover;box-shadow:0 10px 30px rgba(23,20,18,.25)}
 </style>
-<script>if(!matchMedia('(prefers-reduced-motion: reduce)').matches&&'IntersectionObserver'in window)document.documentElement.className='js-mov'</script>
+<script>(function(){var q=false;try{q=localStorage.getItem('bv-quieto')==='1'}catch(e){}document.documentElement.className=(!q&&'IntersectionObserver'in window)?'js-mov':'quieto'})()</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Restaurant","name":"Bowl Vibes","slogan":"Sabor que nutre, energía que vibra","servesCuisine":"Bowls saludables","address":{"@type":"PostalAddress","addressLocality":"Medellín","addressCountry":"CO"},"openingHours":"Mo-Su 11:00-21:00","telephone":"+573246281665","sameAs":["https://www.instagram.com/bowlvibesmed/"],"hasMenu":{"@type":"Menu","hasMenuSection":[{"@type":"MenuSection","name":"Bowls","hasMenuItem":[{"@type":"MenuItem","name":"Fresh Vibes","description":"140 g de salmón. Arroz de sushi, edamame, pepino encurtido, mango y cebolla morada. Toque final de alga nori, sésamo y salsa ponzu.","offers":{"@type":"Offer","price":35000,"priceCurrency":"COP"}},{"@type":"MenuItem","name":"Mexa Vibes","description":"140 g de carne desmechada. Arroz integral, maíz, frijol negro, pico de gallo y aguacate. Toque picante de jalapeños y salsa chipotle mayo o guacamole.","offers":{"@type":"Offer","price":25000,"priceCurrency":"COP"}},{"@type":"MenuItem","name":"Indian Vibes","description":"140 g de pollo tikka. Arroz basmati al curry con cúrcuma y cardamomo, zanahoria rallada, pepino, edamame y aguacate. Toque de almendras fileteadas, dátiles y chutney de mango con hierbabuena y limón.","offers":{"@type":"Offer","price":25000,"priceCurrency":"COP"}},{"@type":"MenuItem","name":"Italian Vibes","description":"140 g de camarones salteados. Pasta al dente con camarones salteados, tomate cherry, albahaca fresca, mozzarella en perlas y aceitunas negras. Toque de pesto ligero y vinagreta balsámica.","offers":{"@type":"Offer","price":35000,"priceCurrency":"COP"}},{"@type":"MenuItem","name":"Asian Vibes","description":"140 g de atún fresco. Arroz jazmín con rábano, pepino europeo, zanahoria, aguacate y cebollín. Gyosas doradas, sésamo y alga nori para un toque oriental único.","offers":{"@type":"Offer","price":30000,"priceCurrency":"COP"}},{"@type":"MenuItem","name":"Tropical Vibes","description":"140 g de tilapia en salsa de maracuyá. Arroz de coco cremoso, con maduro asado, aguacate y toque de maracuyá. Dulce, fresco y lleno de sabor caribeño.","offers":{"@type":"Offer","price":25000,"priceCurrency":"COP"}}]},{"@type":"MenuSection","name":"Bebidas","hasMenuItem":[{"@type":"MenuItem","name":"Té Hatsu","offers":{"@type":"Offer","price":7000,"priceCurrency":"COP"}},{"@type":"MenuItem","name":"Soda Hatsu","offers":{"@type":"Offer","price":7500,"priceCurrency":"COP"}},{"@type":"MenuItem","name":"Coca-Cola Zero","offers":{"@type":"Offer","price":5000,"priceCurrency":"COP"}},{"@type":"MenuItem","name":"Coca-Cola","offers":{"@type":"Offer","price":5000,"priceCurrency":"COP"}},{"@type":"MenuItem","name":"H2OH","offers":{"@type":"Offer","price":4500,"priceCurrency":"COP"}},{"@type":"MenuItem","name":"Agua con gas","offers":{"@type":"Offer","price":6000,"priceCurrency":"COP"}}]}]}}</script>
 </head>
 <body>
@@ -195,7 +258,7 @@ dialog::backdrop{background:rgba(0,0,0,.6)}
 <header class="cab">
   <a class="marca" href="index.html" aria-label="Bowl Vibes, inicio">
     <img src="img/logo-160.webp" width="48" height="48" alt="">
-    <span><b>BOWL VIBES</b><small>Cocina oculta</small></span>
+    <span><b>Bowl Vibes</b><small>Cocina oculta</small></span>
   </a>
   <nav aria-label="Secciones del menú">
     <a href="#bowls">Bowls</a><a href="#arma">Arma tu bowl</a><a href="#bebidas">Bebidas</a>
@@ -213,7 +276,7 @@ dialog::backdrop{background:rgba(0,0,0,.6)}
     <h2 class="titulo" id="t-bowls">Bowls</h2>
     
   <article class="bowl c-lila" id="bowl-fresh">
-    <div class="bowl-foto"><img class="plato" src="img/bowls/fresh-400.webp" srcset="img/bowls/fresh-400.webp 400w, img/bowls/fresh-800.webp 800w" sizes="(min-width:760px) 340px, 62vw" width="400" height="400" alt="Fresh Vibes: Arroz de sushi, edamame, pepino encurtido, mango y cebolla morada. Toque final de alga nori, sésamo y salsa ponzu." fetchpriority="high" decoding="async" data-giro="0.05">
+    <div class="bowl-foto"><img class="plato" src="img/bowls/fresh-400.webp" srcset="img/bowls/fresh-400.webp 400w, img/bowls/fresh-800.webp 800w" sizes="(min-width:760px) 340px, 62vw" width="400" height="400" alt="Fresh Vibes: Arroz de sushi, edamame, pepino encurtido, mango y cebolla morada. Toque final de alga nori, sésamo y salsa ponzu." fetchpriority="high" decoding="async" data-giro="0.05" data-velo>
       <p class="sello">$35.000</p></div>
     <div class="bowl-texto">
       <h3>Fresh Vibes</h3>
@@ -229,7 +292,7 @@ dialog::backdrop{background:rgba(0,0,0,.6)}
     </div>
   </article>
   <article class="bowl c-naranja" id="bowl-mexa">
-    <div class="bowl-foto" data-rev="zoom"><img class="plato" src="img/bowls/mexa-400.webp" srcset="img/bowls/mexa-400.webp 400w, img/bowls/mexa-800.webp 800w" sizes="(min-width:760px) 340px, 62vw" width="400" height="400" alt="Mexa Vibes: Arroz integral, maíz, frijol negro, pico de gallo y aguacate. Toque picante de jalapeños y salsa chipotle mayo o guacamole." loading="lazy" decoding="async" data-giro="0.05">
+    <div class="bowl-foto" data-rev="zoom"><img class="plato" src="img/bowls/mexa-400.webp" srcset="img/bowls/mexa-400.webp 400w, img/bowls/mexa-800.webp 800w" sizes="(min-width:760px) 340px, 62vw" width="400" height="400" alt="Mexa Vibes: Arroz integral, maíz, frijol negro, pico de gallo y aguacate. Toque picante de jalapeños y salsa chipotle mayo o guacamole." loading="lazy" decoding="async" data-giro="0.05" data-velo>
       <p class="sello">$25.000</p></div>
     <div class="bowl-texto" data-rev>
       <h3>Mexa Vibes</h3>
@@ -245,7 +308,7 @@ dialog::backdrop{background:rgba(0,0,0,.6)}
     </div>
   </article>
   <article class="bowl c-amarillo" id="bowl-indian">
-    <div class="bowl-foto" data-rev="zoom"><img class="plato" src="img/bowls/indian-400.webp" srcset="img/bowls/indian-400.webp 400w, img/bowls/indian-800.webp 800w" sizes="(min-width:760px) 340px, 62vw" width="400" height="400" alt="Indian Vibes: Arroz basmati al curry con cúrcuma y cardamomo, zanahoria rallada, pepino, edamame y aguacate. Toque de almendras fileteadas, dátiles y chutney de mango con hierbabuena y limón." loading="lazy" decoding="async" data-giro="0.05">
+    <div class="bowl-foto" data-rev="zoom"><img class="plato" src="img/bowls/indian-400.webp" srcset="img/bowls/indian-400.webp 400w, img/bowls/indian-800.webp 800w" sizes="(min-width:760px) 340px, 62vw" width="400" height="400" alt="Indian Vibes: Arroz basmati al curry con cúrcuma y cardamomo, zanahoria rallada, pepino, edamame y aguacate. Toque de almendras fileteadas, dátiles y chutney de mango con hierbabuena y limón." loading="lazy" decoding="async" data-giro="0.05" data-velo>
       <p class="sello">$25.000</p></div>
     <div class="bowl-texto" data-rev>
       <h3>Indian Vibes</h3>
@@ -261,7 +324,7 @@ dialog::backdrop{background:rgba(0,0,0,.6)}
     </div>
   </article>
   <article class="bowl c-crema" id="bowl-italian">
-    <div class="bowl-foto" data-rev="zoom"><img class="plato" src="img/bowls/italian-400.webp" srcset="img/bowls/italian-400.webp 400w, img/bowls/italian-800.webp 800w" sizes="(min-width:760px) 340px, 62vw" width="400" height="400" alt="Italian Vibes: Pasta al dente con camarones salteados, tomate cherry, albahaca fresca, mozzarella en perlas y aceitunas negras. Toque de pesto ligero y vinagreta balsámica." loading="lazy" decoding="async" data-giro="0.05">
+    <div class="bowl-foto" data-rev="zoom"><img class="plato" src="img/bowls/italian-400.webp" srcset="img/bowls/italian-400.webp 400w, img/bowls/italian-800.webp 800w" sizes="(min-width:760px) 340px, 62vw" width="400" height="400" alt="Italian Vibes: Pasta al dente con camarones salteados, tomate cherry, albahaca fresca, mozzarella en perlas y aceitunas negras. Toque de pesto ligero y vinagreta balsámica." loading="lazy" decoding="async" data-giro="0.05" data-velo>
       <p class="sello">$35.000</p></div>
     <div class="bowl-texto" data-rev>
       <h3>Italian Vibes</h3>
@@ -277,7 +340,7 @@ dialog::backdrop{background:rgba(0,0,0,.6)}
     </div>
   </article>
   <article class="bowl c-lima" id="bowl-asian">
-    <div class="bowl-foto" data-rev="zoom"><img class="plato" src="img/bowls/asian-400.webp" srcset="img/bowls/asian-400.webp 400w, img/bowls/asian-800.webp 800w" sizes="(min-width:760px) 340px, 62vw" width="400" height="400" alt="Asian Vibes: Arroz jazmín con rábano, pepino europeo, zanahoria, aguacate y cebollín. Gyosas doradas, sésamo y alga nori para un toque oriental único." loading="lazy" decoding="async" data-giro="0.05">
+    <div class="bowl-foto" data-rev="zoom"><img class="plato" src="img/bowls/asian-400.webp" srcset="img/bowls/asian-400.webp 400w, img/bowls/asian-800.webp 800w" sizes="(min-width:760px) 340px, 62vw" width="400" height="400" alt="Asian Vibes: Arroz jazmín con rábano, pepino europeo, zanahoria, aguacate y cebollín. Gyosas doradas, sésamo y alga nori para un toque oriental único." loading="lazy" decoding="async" data-giro="0.05" data-velo>
       <p class="sello">$30.000</p></div>
     <div class="bowl-texto" data-rev>
       <h3>Asian Vibes</h3>
@@ -293,7 +356,7 @@ dialog::backdrop{background:rgba(0,0,0,.6)}
     </div>
   </article>
   <article class="bowl c-rosa" id="bowl-tropical">
-    <div class="bowl-foto" data-rev="zoom"><img class="plato" src="img/bowls/tropical-400.webp" srcset="img/bowls/tropical-400.webp 400w, img/bowls/tropical-800.webp 800w" sizes="(min-width:760px) 340px, 62vw" width="400" height="400" alt="Tropical Vibes: Arroz de coco cremoso, con maduro asado, aguacate y toque de maracuyá. Dulce, fresco y lleno de sabor caribeño." loading="lazy" decoding="async" data-giro="0.05">
+    <div class="bowl-foto" data-rev="zoom"><img class="plato" src="img/bowls/tropical-400.webp" srcset="img/bowls/tropical-400.webp 400w, img/bowls/tropical-800.webp 800w" sizes="(min-width:760px) 340px, 62vw" width="400" height="400" alt="Tropical Vibes: Arroz de coco cremoso, con maduro asado, aguacate y toque de maracuyá. Dulce, fresco y lleno de sabor caribeño." loading="lazy" decoding="async" data-giro="0.05" data-velo>
       <p class="sello">$25.000</p></div>
     <div class="bowl-texto" data-rev>
       <h3>Tropical Vibes</h3>
@@ -571,6 +634,7 @@ dialog::backdrop{background:rgba(0,0,0,.6)}
   <p><a href="https://www.instagram.com/bowlvibesmed/" rel="noopener">Instagram @bowlvibesmed</a></p>
   <p class="pie-horario"><b>Horario:</b> Lunes a domingo, 11:00 a. m. a 9:00 p. m.</p>
   <p class="pie-legal">Bowl Vibes · Cocina oculta · Medellín, Colombia</p>
+  <button type="button" class="pausa-mov" id="pausaMov">Pausar animaciones</button>
 </footer>
 
 <div class="barra-pedido" id="barra" hidden>
@@ -710,7 +774,7 @@ dialog::backdrop{background:rgba(0,0,0,.6)}
 (function () {
   'use strict';
   var d = document, R = d.documentElement;
-  var quieto = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var quieto = R.classList.contains('quieto');
   var porVer = R.classList.contains('js-mov') ? [].slice.call(d.querySelectorAll('[data-rev]')) : [];
   var giros = [].slice.call(d.querySelectorAll('[data-giro]'));
   var barra = d.getElementById('progreso');
@@ -744,6 +808,342 @@ dialog::backdrop{background:rgba(0,0,0,.6)}
   cuadro();
   // Red de seguridad: si el navegador frena las animaciones (pestaña en segundo plano), nada se queda oculto.
   if (porVer.length) { var red = window.setInterval(function () { cuadro(); if (!porVer.length) window.clearInterval(red); }, 900); }
+})();
+
+// Velo de puntos: la foto aparece como una trama de dos tintas y se resuelve en la imagen real.
+(function () {
+  'use strict';
+  var d = document;
+  if (!d.documentElement.classList.contains('js-mov')) return;
+  var G = 64, E = 5;                       // 64 x 64 celdas, lienzo de 320 px
+  var BAYER = [0, 8, 2, 10, 12, 4, 14, 6, 3, 11, 1, 9, 15, 7, 13, 5];
+
+  function preparar(img) {
+    var estilo = window.getComputedStyle(img);
+    var papel = estilo.getPropertyValue('--velo-papel').trim() || '#f4f0e8';
+    var tinta = estilo.getPropertyValue('--velo-tinta').trim() || '#171412';
+    var px;
+    try {
+      var t = d.createElement('canvas'); t.width = t.height = G;
+      var tx = t.getContext('2d', { willReadFrequently: true });
+      tx.drawImage(img, 0, 0, G, G);
+      px = tx.getImageData(0, 0, G, G).data;
+    } catch (e) { img.classList.add('velo-listo'); return null; }   // sin permiso de lectura: se muestra la foto y ya
+    var c = d.createElement('canvas'); c.width = c.height = G * E; c.className = 'velo'; c.setAttribute('aria-hidden', 'true');
+    var x = c.getContext('2d');
+    x.fillStyle = papel; x.fillRect(0, 0, c.width, c.height);
+    x.fillStyle = tinta;
+    var orden = [], max = 0;
+    for (var fy = 0; fy < G; fy++) {
+      for (var fx = 0; fx < G; fx++) {
+        var i = (fy * G + fx) * 4;
+        var luz = (px[i] * 0.299 + px[i + 1] * 0.587 + px[i + 2] * 0.114) / 255;
+        if (luz < (BAYER[(fy & 3) * 4 + (fx & 3)] + 0.5) / 16) x.fillRect(fx * E, fy * E, E, E);
+        var o = Math.hypot(fx - G / 2, fy - G / 2) / G * 0.9 + Math.random() * 0.45;
+        if (o > max) max = o;
+        orden.push([o, fx, fy]);
+      }
+    }
+    orden.sort(function (a, b) { return a[0] - b[0]; });
+    img.insertAdjacentElement('afterend', c);
+    img.classList.add('velo-listo');
+    return function () {
+      var t0 = null, k = 0;
+      (function paso(t) {
+        if (t0 === null) t0 = t;
+        var p = Math.min(1, (t - t0) / 1500);
+        var tope = (1 - Math.pow(1 - p, 2)) * max;
+        while (k < orden.length && orden[k][0] <= tope) { x.clearRect(orden[k][1] * E, orden[k][2] * E, E, E); k++; }
+        if (p < 1) window.requestAnimationFrame(paso); else c.remove();
+      })(window.performance.now());
+    };
+  }
+
+  d.querySelectorAll('img[data-velo]').forEach(function (img) {
+    var abrir = null, visto = false, hecho = false;
+    function intentar() { if (visto && abrir && !hecho) { hecho = true; window.setTimeout(abrir, 120); } }
+    function listo() { abrir = preparar(img); intentar(); }
+    if (img.complete && img.naturalWidth) listo(); else { img.addEventListener('load', listo, { once: true }); img.addEventListener('error', function () { img.classList.add('velo-listo'); }, { once: true }); }
+    new IntersectionObserver(function (es, io) {
+      if (es[0].isIntersecting) { visto = true; io.disconnect(); intentar(); }
+    }, { threshold: 0.3 }).observe(img.parentNode);
+  });
+})();
+// Efectos adaptados (a JavaScript sin librerias) de las referencias de la dueña:
+//  - Soft Aurora, Click Spark, Star Border y Glare Hover: reactbits.dev (DavidHDev/react-bits)
+//  - Cursores Jellyroll y Tagalong: csscursors.colorion.co
+(function () {
+  'use strict';
+  var d = document, R = d.documentElement;
+  var conMov = R.classList.contains('js-mov');
+
+  // ---- Boton para pausar o activar las animaciones (queda recordado en el navegador) ----
+  var bp = d.getElementById('pausaMov');
+  if (bp) {
+    bp.textContent = conMov ? 'Pausar animaciones' : 'Activar animaciones';
+    bp.addEventListener('click', function () {
+      try { window.localStorage.setItem('bv-quieto', conMov ? '1' : '0'); } catch (e) { return; }
+      window.location.reload();
+    });
+  }
+  if (!conMov) return;
+  var fino = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+
+  function color(nombre, respaldo) {
+    var t = window.getComputedStyle(R).getPropertyValue(nombre).trim() || respaldo;
+    var m = /^#?([0-9a-f]{6})$/i.exec(t) || /^#?([0-9a-f]{6})$/i.exec(respaldo);
+    return [0, 2, 4].map(function (i) { return parseInt(m[1].slice(i, i + 2), 16) / 255; });
+  }
+
+  // ---- Soft Aurora (WebGL2): bandas de luz de color que fluyen y siguen al cursor ----
+  var VERT = '#version 300 es\nconst vec2 c[3]=vec2[3](vec2(-1.,-1.),vec2(3.,-1.),vec2(-1.,3.));void main(){gl_Position=vec4(c[gl_VertexID],0.,1.);}';
+  var FRAG = [
+    '#version 300 es', 'precision highp float;',
+    'uniform vec2 uResolution;uniform float uFlow;uniform float uHue;uniform float uScale;uniform float uBrightness;',
+    'uniform vec3 uColor1;uniform vec3 uColor2;uniform float uNoiseFreq;uniform float uNoiseAmp;uniform float uBandHeight;',
+    'uniform float uBandSpread;uniform float uOctaveDecay;uniform float uLayerOffset;uniform vec4 uCursor;uniform float uSpectrum;',
+    'uniform vec3 uIntro;uniform float uLightMode;uniform float uOpacity;',
+    'out vec4 fragColor;',
+    '#define TAU 6.28318',
+    'vec3 gh(vec3 p){p=vec3(dot(p,vec3(127.1,311.7,234.6)),dot(p,vec3(269.5,183.3,198.3)),dot(p,vec3(169.5,283.3,156.9)));',
+    ' vec3 h=fract(sin(p)*43758.5453123);float phi=acos(2.*h.x-1.);float th=TAU*h.y;return vec3(cos(th)*sin(phi),sin(th)*cos(phi),cos(phi));}',
+    'float qs(float t){float t2=t*t;float t3=t*t2;return 6.*t3*t2-15.*t2*t2+10.*t3;}',
+    'vec3 cg(float t,vec3 a,vec3 b,vec3 c,vec3 d){return a+b*cos(TAU*(c*t+d));}',
+    'float perlin(float amp,float fr,float px,float py,float pz){float x=px*fr;float y=py*fr;',
+    ' float fx=floor(x);float fy=floor(y);float fz=floor(pz);float cx=ceil(x);float cy=ceil(y);float cz=ceil(pz);',
+    ' float d000=dot(gh(vec3(fx,fy,fz)),vec3(x-fx,y-fy,pz-fz));float d100=dot(gh(vec3(cx,fy,fz)),vec3(x-cx,y-fy,pz-fz));',
+    ' float d010=dot(gh(vec3(fx,cy,fz)),vec3(x-fx,y-cy,pz-fz));float d110=dot(gh(vec3(cx,cy,fz)),vec3(x-cx,y-cy,pz-fz));',
+    ' float d001=dot(gh(vec3(fx,fy,cz)),vec3(x-fx,y-fy,pz-cz));float d101=dot(gh(vec3(cx,fy,cz)),vec3(x-cx,y-fy,pz-cz));',
+    ' float d011=dot(gh(vec3(fx,cy,cz)),vec3(x-fx,y-cy,pz-cz));float d111=dot(gh(vec3(cx,cy,cz)),vec3(x-cx,y-cy,pz-cz));',
+    ' float sx=qs(x-fx);float sy=qs(y-fy);float sz=qs(pz-fz);',
+    ' return amp*mix(mix(mix(d000,d100,sx),mix(d010,d110,sx),sy),mix(mix(d001,d101,sx),mix(d011,d111,sx),sy),sz);}',
+    'float glow(float t,vec2 uv,float bend){float n=0.;float fr=uNoiseFreq;float amp=uNoiseAmp;vec2 sp=uv*uScale;',
+    ' for(float i=0.;i<3.;i+=1.){n+=perlin(amp,fr,sp.x,sp.y,t);amp*=uOctaveDecay;fr*=2.;}',
+    ' float yb=uv.y*10.-(uBandHeight+bend)*10.;',
+    ' return .3*max(exp(uBandSpread*(1.-1.1*uIntro.y*abs(n*uIntro.z+yb))),0.);}',
+    'void main(){vec2 uv=gl_FragCoord.xy/uResolution.xy;vec2 screen=gl_FragCoord.xy/uResolution.y;float t=.4*uFlow;',
+    ' float reach=exp(-pow((screen.x-uCursor.x)/.32,2.))*uCursor.z;float gap=uCursor.y-uBandHeight;float near=exp(-gap*gap/.16);',
+    ' float bend=reach*gap*near*.55;float boost=(1.+reach*near*.25)*uIntro.x;',
+    ' float g1=glow(t,screen,bend)*boost;float g2=glow(t+uLayerOffset,screen,bend)*boost;',
+    ' vec3 gr1=mix(vec3(1.),cg(uv.x+uHue*.2,vec3(.5),vec3(.5),vec3(1.),vec3(.3,.2,.2)),uSpectrum);',
+    ' vec3 gr2=mix(vec3(1.),cg(uv.x+uHue*.1,vec3(.5),vec3(.5),vec3(2.,1.,0.),vec3(.5,.2,.25)),uSpectrum);',
+    ' vec3 col=.99*g1*gr1*uColor1+.99*g2*gr2*uColor2;col*=uBrightness;',
+    ' float grain=(fract(52.9829189*fract(dot(gl_FragCoord.xy,vec2(.06711056,.00583715))))-.5)/255.;',
+    ' if(uLightMode>.5){float energy=max(col.r,max(col.g,col.b));vec3 hue=clamp(col/max(energy,1e-4),0.,1.);',
+    '  vec3 avg=(g1*uColor1+g2*uColor2)/max(g1+g2,1e-4);float top=max(avg.r,max(avg.g,avg.b));float spread=top-min(avg.r,min(avg.g,avg.b));',
+    '  float core=smoothstep(.55,1.6,energy);float depth=1.25+.45*core;',
+    '  vec3 tint=mix(avg*.82,pow(avg/max(top,1e-4),vec3(depth+.6)),smoothstep(.04,.2,spread));',
+    '  float vivid=smoothstep(.12,.55,1.-min(hue.r,min(hue.g,hue.b)))*smoothstep(.04,.2,spread);',
+    '  vec3 ink=mix(tint,pow(hue,vec3(depth)),vivid)*mix(.93,.8,core);',
+    '  float den=.88*(1.-exp(-1.9*pow(energy,1.7)));den=clamp(den*uOpacity+grain,0.,1.);fragColor=vec4(ink*den,den);',
+    ' }else{float a=clamp(length(col),0.,1.);vec3 c=clamp(col,0.,1.);fragColor=vec4(clamp(c*a+grain,0.,a)*uOpacity,a*uOpacity);}}'
+  ].join('\n');
+
+  function aurora(caja, o) {
+    var lienzo = d.createElement('canvas');
+    var gl = lienzo.getContext('webgl2', { alpha: true, premultipliedAlpha: true, antialias: false });
+    if (!gl) return;
+    function sombra(tipo, src) {
+      var s = gl.createShader(tipo); gl.shaderSource(s, src); gl.compileShader(s);
+      return gl.getShaderParameter(s, gl.COMPILE_STATUS) ? s : null;
+    }
+    var v = sombra(gl.VERTEX_SHADER, VERT), f = sombra(gl.FRAGMENT_SHADER, FRAG);
+    if (!v || !f) return;
+    var p = gl.createProgram(); gl.attachShader(p, v); gl.attachShader(p, f); gl.linkProgram(p);
+    if (!gl.getProgramParameter(p, gl.LINK_STATUS)) return;
+    gl.useProgram(p);
+    function u(n) { return gl.getUniformLocation(p, n); }
+    lienzo.className = 'aurora-gl';
+    caja.insertBefore(lienzo, caja.firstChild);
+    caja.classList.add('con-gl');
+    var zona = caja.parentNode, visible = false, enMarcha = false, t0 = window.performance.now();
+    var raton = { x: 0.5, y: 0.5, f: 0, meta: 0 };
+    function medir() {
+      var k = 0.5;   // mitad de resolucion: el efecto es difuso y asi no pesa
+      lienzo.width = Math.max(2, Math.round(caja.clientWidth * k));
+      lienzo.height = Math.max(2, Math.round(caja.clientHeight * k));
+      gl.viewport(0, 0, lienzo.width, lienzo.height);
+    }
+    function cuadro(ahora) {
+      if (!visible || d.hidden) { enMarcha = false; return; }
+      var t = (ahora - t0) / 1000, e = Math.min(1, t / 1.8), s = e * e * (3 - 2 * e);
+      raton.f += (raton.meta - raton.f) * 0.06;
+      gl.uniform2f(u('uResolution'), lienzo.width, lienzo.height);
+      gl.uniform1f(u('uFlow'), t * o.velocidad);
+      gl.uniform1f(u('uHue'), t * 0.25);
+      gl.uniform1f(u('uScale'), o.escala);
+      gl.uniform1f(u('uBrightness'), o.brillo);
+      gl.uniform3fv(u('uColor1'), o.color1);
+      gl.uniform3fv(u('uColor2'), o.color2);
+      gl.uniform1f(u('uNoiseFreq'), 2.5);
+      gl.uniform1f(u('uNoiseAmp'), 1.0);
+      gl.uniform1f(u('uBandHeight'), o.altura);
+      gl.uniform1f(u('uBandSpread'), o.anchoBanda);
+      gl.uniform1f(u('uOctaveDecay'), 0.1);
+      gl.uniform1f(u('uLayerOffset'), o.capa);
+      gl.uniform4f(u('uCursor'), raton.x * lienzo.width / lienzo.height, raton.y, raton.f, 0);
+      gl.uniform1f(u('uSpectrum'), o.espectro);
+      gl.uniform3f(u('uIntro'), Math.min(1, s / 0.7), 1 + 3 * (1 - s) * (1 - s), 0.25 + 0.75 * s);
+      gl.uniform1f(u('uLightMode'), o.claro ? 1 : 0);
+      gl.uniform1f(u('uOpacity'), o.opacidad);
+      gl.clearColor(0, 0, 0, 0); gl.clear(gl.COLOR_BUFFER_BIT);
+      gl.drawArrays(gl.TRIANGLES, 0, 3);
+      window.requestAnimationFrame(cuadro);
+    }
+    function arrancar() { if (!enMarcha && visible && !d.hidden) { enMarcha = true; window.requestAnimationFrame(cuadro); } }
+    medir();
+    window.addEventListener('resize', medir);
+    d.addEventListener('visibilitychange', arrancar);
+    new IntersectionObserver(function (es) { visible = es[0].isIntersecting; arrancar(); }).observe(caja);
+    if (fino) {
+      zona.addEventListener('pointermove', function (ev) {
+        var r = caja.getBoundingClientRect();
+        raton.x = (ev.clientX - r.left) / r.width; raton.y = 1 - (ev.clientY - r.top) / r.height; raton.meta = 1;
+      });
+      zona.addEventListener('pointerleave', function () { raton.meta = 0; });
+    }
+  }
+  var a1 = d.querySelector('.heroe .aurora'), a2 = d.querySelector('.cierre .aurora');
+  if (a1) aurora(a1, { claro: true, color1: color('--rosa', '#f6a5c8'), color2: color('--lila', '#b9bdf5'), velocidad: 0.6, escala: 1.5, brillo: 1.15, altura: 0.5, anchoBanda: 1, capa: 0.6, espectro: 0.55, opacidad: 0.9 });
+  if (a2) aurora(a2, { claro: false, color1: color('--naranja', '#f26a1b'), color2: color('--rosa', '#f6a5c8'), velocidad: 0.5, escala: 1.4, brillo: 0.9, altura: 0.42, anchoBanda: 1, capa: 0.8, espectro: 0.7, opacidad: 0.85 });
+
+  // ---- Click Spark: chispas que salen del punto donde se toca o se hace clic ----
+  (function () {
+    var c = d.createElement('canvas'); c.className = 'chispas'; c.setAttribute('aria-hidden', 'true');
+    var x = c.getContext('2d'), chispas = [], activo = false, tinta = '#f26a1b';
+    try { tinta = window.getComputedStyle(R).getPropertyValue('--naranja').trim() || tinta; } catch (e) {}
+    d.body.appendChild(c);
+    function medir() { var k = Math.min(2, window.devicePixelRatio || 1); c.width = window.innerWidth * k; c.height = window.innerHeight * k; x.setTransform(k, 0, 0, k, 0, 0); }
+    medir(); window.addEventListener('resize', medir);
+    function pintar(ahora) {
+      x.clearRect(0, 0, window.innerWidth, window.innerHeight);
+      chispas = chispas.filter(function (s) { return ahora - s.t < 460; });
+      x.strokeStyle = tinta; x.lineWidth = 2; x.lineCap = 'round';
+      chispas.forEach(function (s) {
+        var k = (ahora - s.t) / 460, e = 1 - Math.pow(1 - k, 3), radio = 6 + e * 22, largo = 11 * (1 - e);
+        for (var i = 0; i < 8; i++) {
+          var a = i * Math.PI / 4 + s.g;
+          x.beginPath();
+          x.moveTo(s.x + Math.cos(a) * radio, s.y + Math.sin(a) * radio);
+          x.lineTo(s.x + Math.cos(a) * (radio + largo), s.y + Math.sin(a) * (radio + largo));
+          x.stroke();
+        }
+      });
+      if (chispas.length) window.requestAnimationFrame(pintar); else activo = false;
+    }
+    window.addEventListener('pointerdown', function (ev) {
+      if (chispas.length > 12) chispas.shift();
+      chispas.push({ x: ev.clientX, y: ev.clientY, t: window.performance.now(), g: Math.random() * 0.8 });
+      if (!activo) { activo = true; window.requestAnimationFrame(pintar); }
+    }, { passive: true });
+  })();
+
+  // ---- Cursor: gota que se estira al moverse (Jellyroll) y etiqueta "Ver" sobre las fotos (Tagalong) ----
+  if (fino) {
+    var cur = d.createElement('div'); cur.className = 'cur-bv'; cur.setAttribute('aria-hidden', 'true');
+    cur.innerHTML = '<span>Ver ↗</span>';
+    d.body.appendChild(cur);
+    var ux = 0, uy = 0, hay = false, reposo;
+    window.addEventListener('pointermove', function (ev) {
+      if (ev.pointerType === 'touch') return;
+      var px = ev.clientX, py = ev.clientY;
+      if (hay) {
+        var dx = px - ux, dy = py - uy, dist = Math.hypot(dx, dy);
+        if (dist > 0.5) cur.style.setProperty('--angle', Math.atan2(dy, dx).toFixed(3) + 'rad');
+        cur.style.setProperty('--speed', Math.min(1, dist / 32).toFixed(3));
+      }
+      cur.style.setProperty('--x', px.toFixed(1) + 'px');
+      cur.style.setProperty('--y', py.toFixed(1) + 'px');
+      cur.classList.add('activo');
+      var obj = ev.target && ev.target.closest ? ev.target : null;
+      cur.classList.toggle('ver', !!(obj && obj.closest('.fila-foto, .fila h3 a')));
+      cur.classList.toggle('sobre', !!(obj && obj.closest('a, button, input, select, textarea, label, summary')));
+      ux = px; uy = py; hay = true;
+      window.clearTimeout(reposo);
+      reposo = window.setTimeout(function () { cur.style.setProperty('--speed', '0'); }, 120);
+    }, { passive: true });
+    R.addEventListener('pointerleave', function () { cur.classList.remove('activo'); hay = false; });
+  }
+})();
+
+// Segunda tanda: franja que responde al scroll, fotos con inclinacion 3D, foco de luz en las tarjetas
+// y el bowl que "vuela" al pedido. (Ideas de Scroll Velocity, Tilted Card y Spotlight Card de reactbits.dev.)
+(function () {
+  'use strict';
+  var d = document;
+  if (!d.documentElement.classList.contains('js-mov')) return;
+  var fino = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+
+  // ---- Franja de nombres: acelera y cambia de sentido segun el scroll ----
+  var pista = d.querySelector('.franja-pista');
+  if (pista) {
+    pista.style.animation = 'none';
+    var x = 0, sentido = -1, impulso = 0, yAnt = window.scrollY, tAnt = 0, aLaVista = false, andando = false;
+    function paso(t) {
+      if (!aLaVista || d.hidden) { andando = false; return; }
+      var dt = tAnt ? Math.min(0.05, (t - tAnt) / 1000) : 0; tAnt = t;
+      var y = window.scrollY, dy = y - yAnt; yAnt = y;
+      if (Math.abs(dy) > 1) sentido = dy > 0 ? -1 : 1;
+      impulso += (Math.min(900, Math.abs(dy) / Math.max(dt, 0.008)) - impulso) * 0.08;
+      var ciclo = pista.scrollWidth / 4;
+      x += sentido * (46 + impulso * 0.55) * dt;
+      if (x <= -ciclo) x += ciclo; else if (x > 0) x -= ciclo;
+      pista.style.transform = 'translate3d(' + x.toFixed(1) + 'px,0,0)';
+      window.requestAnimationFrame(paso);
+    }
+    function andar() { if (!andando && aLaVista && !d.hidden) { andando = true; tAnt = 0; yAnt = window.scrollY; window.requestAnimationFrame(paso); } }
+    new IntersectionObserver(function (es) { aLaVista = es[0].isIntersecting; andar(); }).observe(pista.parentNode);
+    d.addEventListener('visibilitychange', andar);
+  }
+
+  if (fino) {
+    // ---- Fotos de los bowls: se inclinan en 3D hacia el cursor ----
+    d.querySelectorAll('.fila-foto, .portada-foto, .arma-foto').forEach(function (el) {
+      el.addEventListener('pointermove', function (e) {
+        var r = el.getBoundingClientRect();
+        var px = (e.clientX - r.left) / r.width - 0.5, py = (e.clientY - r.top) / r.height - 0.5;
+        el.style.transition = 'transform .25s ease-out';
+        el.style.transform = 'perspective(800px) rotateX(' + (-py * 14).toFixed(2) + 'deg) rotateY(' + (px * 14).toFixed(2) + 'deg) scale(1.03)';
+      });
+      el.addEventListener('pointerleave', function () {
+        el.style.transition = 'transform .9s cubic-bezier(.22,1,.36,1)';
+        el.style.transform = '';
+      });
+    });
+
+    // ---- Tarjetas y pasos: un foco de luz sigue al cursor ----
+    d.querySelectorAll('.valores li, .pedir li').forEach(function (el) {
+      el.classList.add('foco');
+      el.addEventListener('pointermove', function (e) {
+        var r = el.getBoundingClientRect();
+        el.style.setProperty('--mx', (e.clientX - r.left).toFixed(0) + 'px');
+        el.style.setProperty('--my', (e.clientY - r.top).toFixed(0) + 'px');
+      });
+    });
+  }
+
+  // ---- Menu: al sumar un bowl, su foto vuela hasta el boton del pedido ----
+  var destino = d.getElementById('verPedido');
+  if (destino && 'animate' in d.documentElement) {
+    d.addEventListener('click', function (e) {
+      var b = e.target.closest ? e.target.closest('.mas') : null;
+      var art = b && b.closest('.bowl'), img = art && art.querySelector('.bowl-foto img');
+      if (!img) return;
+      var a = img.getBoundingClientRect(), z = destino.getBoundingClientRect();
+      if (!a.width || !z.width) return;
+      var copia = img.cloneNode(false);
+      copia.removeAttribute('data-velo'); copia.removeAttribute('data-giro'); copia.removeAttribute('srcset'); copia.className = 'vuelo';
+      copia.style.cssText = 'left:' + a.left + 'px;top:' + a.top + 'px;width:' + a.width + 'px;height:' + a.height + 'px';
+      d.body.appendChild(copia);
+      var dx = z.left + z.width / 2 - (a.left + a.width / 2), dy = z.top + z.height / 2 - (a.top + a.height / 2);
+      copia.animate([
+        { transform: 'translate(0,0) scale(1) rotate(0deg)', opacity: 1 },
+        { transform: 'translate(' + (dx * 0.5).toFixed(0) + 'px,' + (dy * 0.5 - 60).toFixed(0) + 'px) scale(.5) rotate(120deg)', opacity: 1, offset: 0.55 },
+        { transform: 'translate(' + dx.toFixed(0) + 'px,' + dy.toFixed(0) + 'px) scale(.08) rotate(240deg)', opacity: 0.2 }
+      ], { duration: 750, easing: 'cubic-bezier(.4,0,.2,1)' }).onfinish = function () { copia.remove(); };
+      window.setTimeout(function () { copia.remove(); }, 1100);   // por si el navegador frena la animacion
+    });
+  }
 })();
 </script>
 </body>
