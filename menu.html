@@ -2,6 +2,7 @@
 <html lang="es-CO">
 <head>
 <meta charset="utf-8">
+<link rel="preload" href="fuentes/inter.woff2" as="font" type="font/woff2" crossorigin>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Menú · Bowl Vibes · Bowls saludables en Medellín</title>
 <meta name="description" content="Menú de Bowl Vibes, cocina oculta de bowls saludables en Medellín: Fresh Vibes, Mexa Vibes, Indian Vibes, Italian Vibes, Asian Vibes, Tropical Vibes y Arma tu bowl. Pide por WhatsApp.">
@@ -19,7 +20,7 @@
   --fondo:#f4f0e8;--crema:#e9e2d5;--blanco:#fff;--tinta:#171412;--suave:#5b524a;--linea:rgba(23,20,18,.16);
   --marron:#7d2d00;--rojo:#ea1e28;--naranja:#fa6612;--amarillo:#ffde59;--rosa:#f884c6;--lima:#a7dd5e;--lila:#adbbff;--wa:#0b5d2e;
   --titular:"Iowan Old Style","Palatino Linotype",Palatino,"Book Antiqua",Georgia,serif;
-  --texto:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  --texto:"Inter",system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
   --r:18px;--suavizado:cubic-bezier(.22,1,.36,1);--lado:22px;
 }
 *{box-sizing:border-box}
@@ -251,6 +252,15 @@ dialog::backdrop{background:rgba(23,20,18,.55)}
 
 /* Contraste AA: sobre paneles de color el texto secundario va mas oscuro (medido: >= 4.5:1 en todos los tonos) */
 [class*="c-"]{--suave:#3d3631}
+
+/* Tipografias de marca, alojadas en el propio sitio (Inter para texto; Bricolage Grotesque para botones y rotulos) */
+@font-face{font-family:"Inter";src:url(fuentes/inter.woff2) format("woff2");font-weight:400 700;font-style:normal;font-display:swap}
+@font-face{font-family:"Bricolage Grotesque";src:url(fuentes/bricolage-grotesque.woff2) format("woff2");font-weight:400 800;font-stretch:100%;font-style:normal;font-display:swap}
+.btn,.sobre,.pildora,.sello,.cab nav a,.cur-bv{font-family:"Bricolage Grotesque",var(--texto)}
+.pedir-datos{display:grid;gap:14px;margin-top:34px;padding-top:22px;border-top:1px solid var(--linea)}
+.pedir-datos dt{font:600 .74rem/1.3 "Bricolage Grotesque",var(--texto);letter-spacing:.16em;text-transform:uppercase;color:var(--suave);margin-bottom:4px}
+.pedir-datos dd{margin:0}
+@media (min-width:860px){.pedir-datos{grid-template-columns:repeat(2,minmax(0,1fr));gap:36px}}
 </style>
 <script>(function(){var q=false;try{q=localStorage.getItem('bv-quieto')==='1'}catch(e){}document.documentElement.className=(!q&&'IntersectionObserver'in window)?'js-mov':'quieto'})()</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Restaurant","name":"Bowl Vibes","slogan":"Sabor que nutre, energía que vibra","servesCuisine":"Bowls saludables","address":{"@type":"PostalAddress","addressLocality":"Medellín","addressCountry":"CO"},"openingHours":"Mo-Su 11:00-21:00","telephone":"+573246281665","sameAs":["https://www.instagram.com/bowlvibesmed/"],"hasMenu":{"@type":"Menu","hasMenuSection":[{"@type":"MenuSection","name":"Bowls","hasMenuItem":[{"@type":"MenuItem","name":"Fresh Vibes","description":"140 g de salmón. Arroz de sushi, edamame, pepino encurtido, mango y cebolla morada. Toque final de alga nori, sésamo y salsa ponzu.","offers":{"@type":"Offer","price":35000,"priceCurrency":"COP"}},{"@type":"MenuItem","name":"Mexa Vibes","description":"140 g de carne desmechada. Arroz integral, maíz, frijol negro, pico de gallo y aguacate. Toque picante de jalapeños y salsa chipotle mayo o guacamole.","offers":{"@type":"Offer","price":25000,"priceCurrency":"COP"}},{"@type":"MenuItem","name":"Indian Vibes","description":"140 g de pollo tikka. Arroz basmati al curry con cúrcuma y cardamomo, zanahoria rallada, pepino, edamame y aguacate. Toque de almendras fileteadas, dátiles y chutney de mango con hierbabuena y limón.","offers":{"@type":"Offer","price":25000,"priceCurrency":"COP"}},{"@type":"MenuItem","name":"Italian Vibes","description":"140 g de camarones salteados. Pasta al dente con camarones salteados, tomate cherry, albahaca fresca, mozzarella en perlas y aceitunas negras. Toque de pesto ligero y vinagreta balsámica.","offers":{"@type":"Offer","price":35000,"priceCurrency":"COP"}},{"@type":"MenuItem","name":"Asian Vibes","description":"140 g de atún fresco. Arroz jazmín con rábano, pepino europeo, zanahoria, aguacate y cebollín. Gyosas doradas, sésamo y alga nori para un toque oriental único.","offers":{"@type":"Offer","price":30000,"priceCurrency":"COP"}},{"@type":"MenuItem","name":"Tropical Vibes","description":"140 g de tilapia en salsa de maracuyá. Arroz de coco cremoso, con maduro asado, aguacate y toque de maracuyá. Dulce, fresco y lleno de sabor caribeño.","offers":{"@type":"Offer","price":25000,"priceCurrency":"COP"}}]},{"@type":"MenuSection","name":"Bebidas","hasMenuItem":[{"@type":"MenuItem","name":"Té Hatsu","offers":{"@type":"Offer","price":7000,"priceCurrency":"COP"}},{"@type":"MenuItem","name":"Soda Hatsu","offers":{"@type":"Offer","price":7500,"priceCurrency":"COP"}},{"@type":"MenuItem","name":"Coca-Cola Zero","offers":{"@type":"Offer","price":5000,"priceCurrency":"COP"}},{"@type":"MenuItem","name":"Coca-Cola","offers":{"@type":"Offer","price":5000,"priceCurrency":"COP"}},{"@type":"MenuItem","name":"H2OH","offers":{"@type":"Offer","price":4500,"priceCurrency":"COP"}},{"@type":"MenuItem","name":"Agua con gas","offers":{"@type":"Offer","price":6000,"priceCurrency":"COP"}}]}]}}</script>
@@ -648,7 +658,7 @@ dialog::backdrop{background:rgba(23,20,18,.55)}
   <div class="ped-cab"><h2 id="t-pedido">Tu pedido</h2><button type="button" class="btn" id="cerrarPedido">Seguir viendo</button></div>
   <ul class="ped-lista" id="pedLista"></ul>
   <p class="ped-total">Subtotal <b id="pedTotal"></b></p>
-  <p class="ped-nota">El valor del domicilio y la forma de pago se confirman por WhatsApp.</p>
+  <p class="ped-nota">El domicilio se envía por DiDi y su valor es variable; te lo confirmamos por WhatsApp. Medios de pago: efectivo, Nequi, transferencia y datáfono.</p>
   <a class="btn btn-wa ped-enviar" id="enviar" href="https://wa.me/573246281665" target="_blank" rel="noopener">Enviar pedido por WhatsApp</a>
 </dialog>
 
